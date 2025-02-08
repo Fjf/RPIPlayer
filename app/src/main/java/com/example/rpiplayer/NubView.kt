@@ -70,9 +70,9 @@ class NubView : View {
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        canvas.drawLine(centerX, centerY, nubX, nubY, paint!!)
         canvas.drawCircle(centerX, centerY, radius, backgroundPaint!!);
         canvas.drawCircle(centerX, centerY, radius, paint!!);
+        canvas.drawLine(centerX, centerY, nubX, nubY, paint!!)
         canvas.drawCircle(nubX, nubY, nubRadius, paint!!)
 
         if (!touching) {
