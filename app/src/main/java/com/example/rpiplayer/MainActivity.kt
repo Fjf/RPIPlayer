@@ -128,7 +128,7 @@ class MainActivity : ComponentActivity() {
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
-                TODO("Not yet implemented")
+               // not used
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
