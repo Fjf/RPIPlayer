@@ -1,22 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:backgroundTint="#E91E63"
+    android:orientation="vertical">
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="vertical">
 
-        <Button
-            android:id="@+id/myButton"
+
+        <ImageButton
+            android:id="@+id/ShutdownButton"
+            android:layout_width="63dp"
+            android:layout_height="64dp"
+            android:background="@drawable/button_background"
+            android:src="@android:drawable/ic_lock_power_off" />
+
+        <SeekBar
+            android:id="@+id/soundSeekBar"
+            android:layout_width="375dp"
+            android:layout_height="139dp"
+            android:layout_centerInParent="true"
+            android:max="100"
+            android:progress="50" />
+
+        <TextView
+            android:id="@+id/soundLevelTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Send Request" />
+            android:layout_below="@id/soundSeekBar"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:text="Sound Level: 50"
+            android:textSize="18sp" />
 
         <com.example.rpiplayer.NubView
             android:id="@+id/nubView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+
     </LinearLayout>
+
+
 </LinearLayout>
+

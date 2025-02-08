@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.ImageButton
 import androidx.activity.ComponentActivity
 import androidx.activity.enableEdgeToEdge
 import okhttp3.MediaType.Companion.toMediaType
@@ -11,6 +12,9 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody
 import okhttp3.Response
+import android.widget.SeekBar
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 
 val TAG = "Mainactivity===="
 
@@ -70,6 +74,11 @@ fun sendGetRequest(url: String) {
     }.start()
 }
 
+fun filterTextBeforeUrl(input: String): String {
+    val urlPattern = Regex("https?://\\S+")
+    return urlPattern.find(input)?.value ?: input
+}
+
 class MainActivity : ComponentActivity() {
 
 
@@ -84,7 +93,8 @@ class MainActivity : ComponentActivity() {
                 val receivedText = receivedIntent.getStringExtra(Intent.EXTRA_TEXT)
                 Log.d(TAG, receivedText.toString())
                 if (receivedText != null) {
-                    val jsonBody = """{"url":"$receivedText"}"""
+                    val filteredText = filterTextBeforeUrl(receivedText)
+                    val jsonBody = """{"url":"$filteredText"}"""
 
                     sendPostRequest(
                         "http://192.168.1.1:7790/process",
@@ -101,12 +111,34 @@ class MainActivity : ComponentActivity() {
         onSharedIntent()
         enableEdgeToEdge()
 
-        val button = findViewById<Button>(R.id.myButton)
+        val button = findViewById<ImageButton>(R.id.ShutdownButton)
 
         button.setOnClickListener {
             sendGetRequest("http://192.168.1.1:7790/shutdown")
+
         }
+
+        var soundSeekBar = findViewById<SeekBar>(R.id.soundSeekBar)
+        val soundLevelTextView = findViewById<TextView>(R.id.soundLevelTextView)
+
+        soundSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                soundLevelTextView.text = "Sound Level: $progress"
+
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                sendGetRequest("http://192.168.1.1:7790/changesound")
+            }
+
+        })
     }
+
+
 }
 
 
